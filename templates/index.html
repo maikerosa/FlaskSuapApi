@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    
+{% endblock %}
+
+{% block content %}
+    <div class="container index" >
+        <div class="d-flex justify-content-center align-items-center  flex-column  card-login">
+            <img src="{{ url_for('static', filename='assets/img/SimplificaSuap.png') }}" class="img-fluid" alt="Responsive image">
+            <span class="text-center text-muted">
+                Entre para ver suas notas
+            </span>
+            <a href="{{url_for('login')}}" class="btn w-100">Login</a>
+        </div>
+    </div>
+
+{% endblock %}

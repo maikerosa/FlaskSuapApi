@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/snippets.css')}}">
+
+{% endblock %}
+
+
+
+{% block content %}
+<body className='snippet-body'>
+
+
+    <div class="container mt-5">
+        <div class="card  ps-5">
+            <div class="card-body row">
+                <div class="col-sm-2 col-md-2 align-items-center justify-content-center d-flex">
+                    <img src="https://suap.ifrn.edu.br/{{user.url_foto_150x200}}" width="100" class="rounded-circle">
+                </div>
+                <div class="col-sm-10 col-md-10 mb-1">
+                    <h2>{{vinculo.nome}}</h2>
+                    <h5>{{user.matricula}}</h5>
+                    <h5>{{vinculo.curso}}</h5>
+                </div>
+                <div class="col-12 mt-5  d-flex gap-3">
+                    <a href="{{url_for('boletins')}}" type="button" class="btn btn-primary" >
+                         Boletins
+                    </a>
+                    <a href="{{url_for('logout')}}" class="btn btn-danger">Sair</a>
+                </div>
+            </div>
+        </div>
+        
+
+        
+        <div class="mt-5 d-flex justify-content-center card py-5 ps-5">
+            <div class="card-body">
+                    <h2 class="text-center">Informações</h2>
+                
+                <div class="modal-body ps-3">
+                    <p>Nome: {{vinculo.nome}}</p>
+                    <p>Email: {{user.email}}</p>
+                    <p>Vinculo: {{user.tipo_vinculo}}</p>
+                    <p>Campus: {{vinculo.campus}}</p>
+                    <p>Curso: {{vinculo.curso}}</p>
+                    <p>Situacao: {{vinculo.situacao}}</p>
+
+                </div>
+            </div>
+        </div>
+
+     
+    </div>
+
+    <script type='text/javascript'>var myLink = document.querySelector('a[href="#"]');
+        myLink.addEventListener('click', function (e) {
+            e.preventDefault();
+        });
+    </script>
+
+
+
+    {% endblock %}
+
+
+</body>
