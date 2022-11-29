@@ -1,21 +1,73 @@
 {% extends 'base.html' %}
 
+{% block css %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/boletins.css') }}">
+
+{% endblock %}
 
 {% block content %}
 
-<div class="card mt-5">
-       <div class="card-body">
-              <div class="d-flex justify-content-end">
-                     <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#modalAno">Filtrar por
-                            ano</button>
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPeriodo">Filtrar por
-                            periodo</button>
-              </div>
-
+<div class="container my-4 d-flex gap-2 align-items-end justify-content-between">
+       <div class="d-flex justify-content-start">
+              <a href="{{ url_for('index') }}" class="btn btn-primary">Voltar</a>
        </div>
-    </div>
+
+       <form action="{{ url_for('boletins') }}" method="POST" class="d-flex gap-2 align-items-end justify-content-between">
+              <div class="form-group">
+                     <label for="ano">Ano</label>
+                     <select class="form-control" id="ano" name="ano">
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                     </select>
+              </div>
+              <div class="form-group">
+                     <label for="periodo">Periodo</label>
+                     <select class="form-control" id="periodo" name="periodo">
+                     <option value="1">1</option>
+                     </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Enviar</button>
+       </form>
+       
+</div>
+
+<div class="card mt-1 container mb-5">
+       <div class="card-body">
+              <h5 class="card-title text-center mb-3">Boletim do ano {{ ano }} e periodo {{ periodo }}</h5>
+              <table class="table table-striped table-hover table-responsive">
+                     <thead>
+                            <tr>
+                                   <th scope="col">Disciplina</th>
+                                   <th scope="col">1º Bimestre</th>
+                                   <th scope="col">2º Bimestre</th>
+                                   <th scope="col">3º Bimestre</th>
+                                   <th scope="col">4º Bimestre</th>
+                            </tr>
+                     </thead>
+                     <tbody>
+                            {% for boletim in boletins %}
+                            <tr>
+                                   <td>{{ boletim.disciplina }}</td>
+                                   <td>Nota: {{ boletim.nota_etapa_1.nota }} Faltas: {{ boletim.nota_etapa_1.faltas }}</td>
+                                   <td>Nota: {{ boletim.nota_etapa_2.nota }} Faltas: {{ boletim.nota_etapa_2.faltas }}</td>
+                                   <td>Nota: {{ boletim.nota_etapa_3.nota }} Faltas: {{ boletim.nota_etapa_3.faltas }}</td>
+                                   <td>Nota: {{ boletim.nota_etapa_4.nota }} Faltas: {{ boletim.nota_etapa_4.faltas }}</td>
+                            </tr>
+                            {% endfor %}
+                     </tbody>
+              </table>
+
+
+            
+       </div>
+</div>
 
 </div>
+
+
 
 
 

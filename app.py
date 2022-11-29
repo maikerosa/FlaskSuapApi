@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, session, request, jsonify, render_te
 from flask_oauthlib.client import OAuth
 
 
+
 app = Flask(__name__)
 app.debug = True
 app.secret_key = 'development'
@@ -9,8 +10,8 @@ oauth = OAuth(app)
 
 suap = oauth.remote_app(
     'suap',
-    consumer_key="zeM1RA5ruf5BV9V813h0DPefsVVSem9qWMATV5Na",
-    consumer_secret="tHPp565ug8gX4IFPt2pidsmzsrH1xl1w3oLWp1VhZoiZ7bwDdcBjfKqVJHnVQ9MYRucGcS7SSp2Ne9HDcn8OAHLtac3IfczdAwdfgPwFsSXSM9c6kGrX6svTf9ZvfmOg",
+    consumer_key="tjdaz4wvVHePFtyMMFO8v7NFjusRoGPOSp92shwj",
+    consumer_secret="yVYUbuaxyFH6tdW3bbRM1R7SsRubC8J2UzQxrPESPZnyCgmd8PnnHkQ4eSOGf75NypEE2EU8Biug0kl72bWkTX2h4GeAkqcv8GzAruStsD63G67NVMrnsI6cq7gMpmp4",
     base_url='https://suap.ifrn.edu.br/api/',
     request_token_url=None,
     access_token_method='POST',
@@ -53,14 +54,23 @@ def authorized():
     return redirect(url_for('index')) 
 
 
-@app.route('/boletins')
+
+#rota de boletim pegando o ano e periodo do form
+@app.route('/boletins', methods=['GET', 'POST'])
 def boletins():
     if 'suap_token' in session:
-        me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=2022, periodo=1))
-
-        return render_template('boletins.html', boletins=me.data)
+        if request.method == 'GET':
+            me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=2021, periodo=1))
+            return render_template('boletins.html', boletins=me.data, ano=2021, periodo=1)
+        if request.method == 'POST':
+            ano = request.form['ano']
+            periodo = request.form['periodo']
+            me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=ano, periodo=periodo))
+            
+            return render_template('boletins.html', boletins=me.data, ano=ano, periodo=periodo)
     else:
         return render_template('index.html')
+
 
 
 @suap.tokengetter
