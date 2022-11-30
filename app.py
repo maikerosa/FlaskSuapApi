@@ -60,7 +60,7 @@ def authorized():
 def boletins():
     if 'suap_token' in session:
         if request.method == 'GET':
-            me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=2021, periodo=1))
+            me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=2022, periodo=1))
             return render_template('boletins.html', boletins=me.data, ano=2021, periodo=1)
         if request.method == 'POST':
             ano = request.form['ano']
