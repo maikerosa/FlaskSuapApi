@@ -60,14 +60,26 @@ def authorized():
 def boletins():
     if 'suap_token' in session:
         if request.method == 'GET':
+            periodos_letivos_do_aluno = suap.get('v2/minhas-informacoes/meus-periodos-letivos/')
+            ano_letivo = []
+            for periodo in periodos_letivos_do_aluno.data:
+                if periodo['ano_letivo'] not in ano_letivo:
+                    ano_letivo.append(periodo['ano_letivo'])
             me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=2022, periodo=1))
-            return render_template('boletins.html', boletins=me.data, ano=2021, periodo=1)
+            return render_template('boletins.html', boletins=me.data, ano=2021, periodo=1, ano_letivo=ano_letivo)
         if request.method == 'POST':
+            periodos_letivos_do_aluno = suap.get('v2/minhas-informacoes/meus-periodos-letivos/')
+            ano_letivo = []
+            for periodo in periodos_letivos_do_aluno.data:
+                if periodo['ano_letivo'] not in ano_letivo:
+                    ano_letivo.append(periodo['ano_letivo'])
+
             ano = request.form['ano']
+            ano = int(ano)
             periodo = request.form['periodo']
             me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=ano, periodo=periodo))
             
-            return render_template('boletins.html', boletins=me.data, ano=ano, periodo=periodo)
+            return render_template('boletins.html', boletins=me.data, ano=ano, periodo=periodo, ano_letivo=ano_letivo)
     else:
         return render_template('index.html')
 
