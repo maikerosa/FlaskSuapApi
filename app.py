@@ -55,7 +55,7 @@ def authorized():
 
 
 
-#rota de boletim pegando o ano e periodo do form
+
 @app.route('/boletins', methods=['GET', 'POST'])
 def boletins():
     if 'suap_token' in session:
