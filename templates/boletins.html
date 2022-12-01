@@ -30,6 +30,7 @@
                      <label for="periodo">Periodo</label>
                      <select class="form-control" id="periodo" name="periodo">
                      <option value="1">1</option>
+
                      </select>
               </div>
               <button type="submit" class="btn btn-primary">Enviar</button>
@@ -50,15 +51,24 @@
                             </tr>
                      </thead>
                      <tbody>
-                            {% for boletim in boletins %}
-                            <tr>
-                                   <td>{{ boletim.disciplina }}</td>
-                                   <td>Nota: {{ boletim.nota_etapa_1.nota }} Faltas: {{ boletim.nota_etapa_1.faltas }}</td>
-                                   <td>Nota: {{ boletim.nota_etapa_2.nota }} Faltas: {{ boletim.nota_etapa_2.faltas }}</td>
-                                   <td>Nota: {{ boletim.nota_etapa_3.nota }} Faltas: {{ boletim.nota_etapa_3.faltas }}</td>
-                                   <td>Nota: {{ boletim.nota_etapa_4.nota }} Faltas: {{ boletim.nota_etapa_4.faltas }}</td>
-                            </tr>
-                            {% endfor %}
+                            {% if boletins != None %}
+                                   {% for boletim in boletins %}
+                                   <tr>
+                                          <td>{{ boletim.disciplina }}</td>
+                                          <td>Nota: {{ boletim.nota_etapa_1.nota }} Faltas: {{ boletim.nota_etapa_1.faltas }}</td>
+                                          <td>Nota: {{ boletim.nota_etapa_2.nota }} Faltas: {{ boletim.nota_etapa_2.faltas }}</td>
+                                          <td>Nota: {{ boletim.nota_etapa_3.nota }} Faltas: {{ boletim.nota_etapa_3.faltas }}</td>
+                                          <td>Nota: {{ boletim.nota_etapa_4.nota }} Faltas: {{ boletim.nota_etapa_4.faltas }}</td>
+                                   </tr>
+                                   {% endfor %}
+
+                            {% else %}
+
+                                   <tr>
+                                          <td colspan="5">Nenhum boletim encontrado</td>
+                                   </tr>
+
+                            {% endif %}
                      </tbody>
               </table>
 

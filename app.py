@@ -79,7 +79,8 @@ def boletins():
             ano = int(ano)
             periodo = request.form['periodo']
             me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=ano, periodo=periodo))
-            
+            if 'detail' in me.data:
+                me.data = None
             return render_template('boletins.html', boletins=me.data, ano=ano, periodo=periodo, ano_letivo=ano_letivo)
     else:
         return render_template('index.html')
