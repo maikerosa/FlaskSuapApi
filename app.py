@@ -10,8 +10,8 @@ oauth = OAuth(app)
 
 suap = oauth.remote_app(
     'suap',
-    consumer_key="tjdaz4wvVHePFtyMMFO8v7NFjusRoGPOSp92shwj",
-    consumer_secret="yVYUbuaxyFH6tdW3bbRM1R7SsRubC8J2UzQxrPESPZnyCgmd8PnnHkQ4eSOGf75NypEE2EU8Biug0kl72bWkTX2h4GeAkqcv8GzAruStsD63G67NVMrnsI6cq7gMpmp4",
+    consumer_key="Chave",
+    consumer_secret="Chave",
     base_url='https://suap.ifrn.edu.br/api/',
     request_token_url=None,
     access_token_method='POST',
