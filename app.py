@@ -65,6 +65,7 @@ def boletins():
             for periodo in periodos_letivos_do_aluno.data:
                 if periodo['ano_letivo'] not in ano_letivo:
                     ano_letivo.append(periodo['ano_letivo'])
+            ano_letivo.sort(reverse=True)
             me = suap.get('v2/minhas-informacoes/boletim/{ano}/{periodo}'.format(ano=2022, periodo=1))
             return render_template('boletins.html', boletins=me.data, ano=2022, periodo=1, ano_letivo=ano_letivo)
         if request.method == 'POST':
@@ -73,7 +74,7 @@ def boletins():
             for periodo in periodos_letivos_do_aluno.data:
                 if periodo['ano_letivo'] not in ano_letivo:
                     ano_letivo.append(periodo['ano_letivo'])
-
+            ano_letivo.sort(reverse=True)
             ano = request.form['ano']
             ano = int(ano)
             periodo = request.form['periodo']
