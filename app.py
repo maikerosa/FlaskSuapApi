@@ -10,8 +10,8 @@ oauth = OAuth(app)
 
 suap = oauth.remote_app(
     'suap',
-    consumer_key="Chave",
-    consumer_secret="Chave",
+    consumer_key="FSmilwQNCBngmLh8FZnXnnhFuMIsWVXXrNR5TAp2",
+    consumer_secret="oADN8WzpYwC7NIfiPJCsXlWn4OrOI1oNwPV4Wbt3D7AJpR5MPB2wmeLckdBuWAYnwYR1kr53wJoRpW9F5HQr8CVeip0qklvF5Z9zy371zCO9tfhmK4BgZeJD9JYQbFgi",
     base_url='https://suap.ifrn.edu.br/api/',
     request_token_url=None,
     access_token_method='POST',
@@ -86,6 +86,21 @@ def boletins():
         return render_template('index.html')
 
 
+
+@app.route('/app', methods=['GET', 'POST'])
+def secret():
+    if 'suap_token' in session:
+        if request.method == 'GET':
+            apps = suap.get('applications/')
+            apps = apps.data['results']
+        elif request.method == 'POST':
+            app = suap.post('applications/', data={'client_type': 'public', 'authorization_grant_type': 'implicit', 'name': 'teste_app', 'redirect_uris': 'http://localhost:5000/app', 'username': 'teste_app'})
+            apps = suap.get('applications/')
+            apps = apps.data['results']
+
+        return render_template('secret.html', apps=apps)
+    else:
+        return render_template('index.html')
 
 @suap.tokengetter
 def get_suap_oauth_token():
