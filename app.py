@@ -10,8 +10,8 @@ oauth = OAuth(app)
 
 suap = oauth.remote_app(
     'suap',
-    consumer_key="",
-    consumer_secret="",
+    consumer_key="sKtxQY8Hg3jeRzG4gPPLK42aMJwzofApwzH1nahp",
+    consumer_secret="Hmcjoq2wVDqrSO0UEi9SxlLSUOKTyha7cm9J6HkV4x2Diqc99yKf7Q5K5PnFHLVn42ZZjl6RgHKjowxaXB3h63kftkg7dv7pn1kSzcks2tNhoVvtgeJNpLG2yT2DpG0G",
     base_url='https://suap.ifrn.edu.br/api/',
     request_token_url=None,
     access_token_method='POST',
@@ -94,7 +94,19 @@ def secret():
             apps = suap.get('applications/')
             apps = apps.data['results']
         elif request.method == 'POST':
-            app = suap.post('applications/', data={'client_type': 'public', 'authorization_grant_type': 'implicit', 'name': 'teste_app', 'redirect_uris': 'http://localhost:5000/app', 'username': 'teste_app'})
+            nome = request.form['name']
+            tipo = request.form['client_type']
+            grant = request.form['authorization_grant_type']
+            redirect = request.form['redirect_uris']
+
+            app = suap.post('applications/', data={
+                'name': nome,
+                'client_type': tipo,
+                'authorization_grant_type': grant,
+                'redirect_uris': redirect,
+                'username': 'username',
+                'email': 'email',
+            })
             apps = suap.get('applications/')
             apps = apps.data['results']
 
