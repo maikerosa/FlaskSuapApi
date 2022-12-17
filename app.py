@@ -19,7 +19,6 @@ suap = oauth.remote_app(
     authorize_url='https://suap.ifrn.edu.br/o/authorize/'
 )
 
-
 @app.route('/')
 def index():
     if 'suap_token' in session:
@@ -82,35 +81,6 @@ def boletins():
             if 'detail' in me.data:
                 me.data = None
             return render_template('boletins.html', boletins=me.data, ano=ano, periodo=periodo, ano_letivo=ano_letivo)
-    else:
-        return render_template('index.html')
-
-
-
-@app.route('/app', methods=['GET', 'POST'])
-def secret():
-    if 'suap_token' in session:
-        if request.method == 'GET':
-            apps = suap.get('applications/')
-            apps = apps.data['results']
-        elif request.method == 'POST':
-            nome = request.form['name']
-            tipo = request.form['client_type']
-            grant = request.form['authorization_grant_type']
-            redirect = request.form['redirect_uris']
-
-            app = suap.post('applications/', data={
-                'name': nome,
-                'client_type': tipo,
-                'authorization_grant_type': grant,
-                'redirect_uris': redirect,
-                'username': 'username',
-                'email': 'email',
-            })
-            apps = suap.get('applications/')
-            apps = apps.data['results']
-
-        return render_template('secret.html', apps=apps)
     else:
         return render_template('index.html')
 
